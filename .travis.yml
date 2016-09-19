@@ -4,8 +4,8 @@ osx_image: xcode8
 install:
 #  - gem list cocoapods | grep ^cocoapods | awk '{print $1'} | xargs gem uninstall --all
 #  - gem install cocoapods --pre
-  - brew upgrade carthage
-
+#  - brew upgrade carthage
+  - brew info carthage
 script: make test-osx test-ios #test-tvos
 
 # xcode_workspace: Overcoat.xcworkspace
