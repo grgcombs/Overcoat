@@ -34,13 +34,9 @@ PODS:
   - Overcoat+CoreData (4.0.0-beta.2):
     - MTLManagedObjectAdapter (> 1.0)
     - Overcoat (~> 4.0.0-beta.2)
-  - Overcoat+PromiseKit (4.0.0-beta.2):
-    - Overcoat (~> 4.0.0-beta.2)
-    - PromiseKit/CorePromise (> 2)
   - Overcoat+ReactiveCocoa (4.0.0-beta.2):
     - Overcoat (~> 4.0.0-beta.2)
     - ReactiveCocoa (~> 2.4)
-  - PromiseKit/CorePromise (3.0.3)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -53,15 +49,12 @@ DEPENDENCIES:
   - OHHTTPStubs
   - Overcoat (from `.`)
   - Overcoat+CoreData (from `.`)
-  - Overcoat+PromiseKit (from `.`)
   - Overcoat+ReactiveCocoa (from `.`)
 
 EXTERNAL SOURCES:
   Overcoat:
     :path: "."
   Overcoat+CoreData:
-    :path: "."
-  Overcoat+PromiseKit:
     :path: "."
   Overcoat+ReactiveCocoa:
     :path: "."
@@ -73,11 +66,9 @@ SPEC CHECKSUMS:
   OHHTTPStubs: f7d1604d04d37d055460c0ef9af01bb249ded0fa
   Overcoat: 034cfff81a23d07c8e71a0c91c91666a70740115
   Overcoat+CoreData: b1561512e9686f52692e86d4d3eeb97a1c1d6249
-  Overcoat+PromiseKit: 69df0e50a5310fb82b9b36d12744cfee6871b7f2
   Overcoat+ReactiveCocoa: 5a24bcc11a99ec8251ab1132bd5ca0e112325c4c
-  PromiseKit: 00ec2a219bf5ad2833f95977698e921932b8dfd3
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
 
-PODFILE CHECKSUM: 7655d284c8e6cebe08c1cbfd0c95a6955588d9c2
+PODFILE CHECKSUM: 4112170eca94892a57febc86118e7b2a3d07dcb5
 
-COCOAPODS: 1.0.0.beta.4
+COCOAPODS: 1.0.0

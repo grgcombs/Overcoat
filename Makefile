@@ -65,7 +65,6 @@ test-pod:
 distribute-pod: test
 	pod trunk push Overcoat.podspec $(POD_TRUNK_PUSH_FLAGS)
 	pod trunk push Overcoat+CoreData.podspec --allow-warnings $(POD_TRUNK_PUSH_FLAGS)
-	pod trunk push Overcoat+PromiseKit.podspec $(POD_TRUNK_PUSH_FLAGS)
 	pod trunk push Overcoat+ReactiveCocoa.podspec $(POD_TRUNK_PUSH_FLAGS)
 	pod trunk push Overcoat+Social.podspec $(POD_TRUNK_PUSH_FLAGS)
 

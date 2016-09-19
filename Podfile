@@ -6,7 +6,6 @@ inhibit_all_warnings!
 def shared_dependencies
   pod 'Overcoat', :path => '.'
   pod 'Overcoat+CoreData', :path => '.'
-  pod 'Overcoat+PromiseKit', :path => '.'
 
   pod 'OHHTTPStubs'
 end

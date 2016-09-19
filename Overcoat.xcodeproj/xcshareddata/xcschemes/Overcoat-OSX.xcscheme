@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FEEEF5051C898D6C003BB99E"
+               BuildableName = "OvercoatTests-OSX.xctest"
+               BlueprintName = "OvercoatTests-OSX"
+               ReferencedContainer = "container:Overcoat.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FEEEF5C51C8AA9B0003BB99E"
+            BuildableName = "Overcoat.framework"
+            BlueprintName = "Overcoat-OSX"
+            ReferencedContainer = "container:Overcoat.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
