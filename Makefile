@@ -6,7 +6,9 @@ IOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme OvercoatTests-iOS -sdk
 TVOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme OvercoatTests-tvOS -sdk appletvsimulator
 
 CARTHAGE_PLATFORMS=Mac,iOS
-CARTHAGE_FLAGS:=--platform $(CARTHAGE_PLATFORMS)
+CARTHAGE_PLATFORM_FLAGS:=--platform $(CARTHAGE_PLATFORMS)
+CARTHAGE_TOOLCHAIN_FLAGS=--toolchain com.apple.dt.toolchain.Swift_2_3
+CARTHAGE_DERIVED_DATA_FLAGS=--derived-data ./Builds
 
 POD_TRUNK_PUSH_FLAGS=--verbose
 
@@ -56,8 +58,8 @@ run-tests: run-tests-osx run-tests-ios run-tests-tvos
 
 test-carthage:
 	rm -rf Pods/
-	carthage update $(CARTHAGE_FLAGS)
-	carthage build --no-skip-current $(CARTHAGE_FLAGS) --verbose
+	carthage update $(CARTHAGE_PLATFORM_FLAGS) --no-build
+	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) --verbose $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
 
 test-pod:
 	pod spec lint ./*.podspec --verbose --allow-warnings --no-clean --fail-fast
