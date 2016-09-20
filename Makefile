@@ -1,9 +1,9 @@
 XC_WORKSPACE=Overcoat.xcworkspace
 XCODE_PROJ=Overcoat.xcodeproj
 
-OSX_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme OvercoatTests-OSX -sdk macosx
-IOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme OvercoatTests-iOS -sdk iphonesimulator
-TVOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme OvercoatTests-tvOS -sdk appletvsimulator
+OSX_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-OSX -sdk macosx
+IOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-iOS -sdk iphonesimulator
+TVOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-tvOS -sdk appletvsimulator
 
 CARTHAGE_PLATFORMS=Mac,iOS
 CARTHAGE_PLATFORM_FLAGS:=--platform $(CARTHAGE_PLATFORMS)
@@ -12,13 +12,13 @@ CARTHAGE_DERIVED_DATA_FLAGS=--derived-data ./Builds
 
 POD_TRUNK_PUSH_FLAGS=--verbose
 
-test: install-pod clean build-tests run-tests
+test: install-carthage clean build-tests run-tests
 
-test-osx: install-pod clean build-tests-osx run-tests-osx
+test-osx: install-carthage clean build-tests-osx run-tests-osx
 
-test-ios: install-pod clean build-tests-ios run-tests-ios
+test-ios: install-carthage clean build-tests-ios run-tests-ios
 
-test-tvos: install-pod clean build-tests-tvos run-tests-tvos
+test-tvos: install-carthage clean build-tests-tvos run-tests-tvos
 
 # Build Tests
 
@@ -27,6 +27,10 @@ clean:
 
 install-pod:
 	COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=YES pod install
+
+install-carthage: 
+	carthage update $(CARTHAGE_PLATFORM_FLAGS) --no-build
+	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) --verbose $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
 
 build-tests-osx:
 	xcodebuild $(OSX_TEST_SCHEME_FLAGS) build

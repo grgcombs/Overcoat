@@ -10,9 +10,9 @@
 #import <OHHTTPStubs/OHHTTPStubs.h>
 #import <OHHTTPStubs/OHPathHelpers.h>
 #import <Overcoat/Overcoat.h>
-#import <OvercoatReactiveCocoa/OvercoatReactiveCocoa.h>
 #import <ReactiveCocoa/RACSignal.h>
-
+#import <OvercoatReactiveCocoa/OvercoatReactiveCocoa.h>
+#import <OvercoatReactiveCocoa/OVCHTTPSessionManager+ReactiveCocoa.h>
 #import "OVCTestModel.h"
 
 #pragma mark - ReactiveSessionManager
@@ -323,7 +323,7 @@
     
     XCTestExpectation *completed = [self expectationWithDescription:@"completed"];
     OVCResponse * __block response = nil;
-    
+
     [[self.client rac_DELETE:@"model/42" parameters:nil] subscribeNext:^(OVCResponse *r) {
         response = r;
         [completed fulfill];
