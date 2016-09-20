@@ -30,7 +30,7 @@ install-pod:
 
 install-carthage: 
 	carthage update $(CARTHAGE_PLATFORM_FLAGS) --no-build
-	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) --verbose $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
+	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
 
 build-tests-osx:
 	xcodebuild $(OSX_TEST_SCHEME_FLAGS) build
