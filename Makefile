@@ -1,29 +1,32 @@
 XC_WORKSPACE=Overcoat.xcworkspace
-XCODE_PROJ=Overcoat.xcodeproj
+XC_PROJ=Overcoat.xcodeproj
+XC_DERIVED_DATA_PATH=./Builds
 
-OSX_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-OSX -sdk macosx
-IOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-iOS -sdk iphonesimulator
-TVOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-tvOS -sdk appletvsimulator
+OSX_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-OSX -derivedDataPath $(XC_DERIVED_DATA_PATH) -sdk macosx
+IOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-iOS -derivedDataPath $(XC_DERIVED_DATA_PATH) -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7 Plus,OS=10.0'
+TVOS_TEST_SCHEME_FLAGS:=-workspace $(XC_WORKSPACE) -scheme Overcoat-tvOS -derivedDataPath $(XC_DERIVED_DATA_PATH) -sdk appletvsimulator -destination 'platform=tvOS Simulator,name=Apple TV 1080p,OS=10.0'
 
-CARTHAGE_PLATFORMS=Mac,iOS
-CARTHAGE_PLATFORM_FLAGS:=--platform $(CARTHAGE_PLATFORMS)
-CARTHAGE_TOOLCHAIN_FLAGS=--toolchain com.apple.dt.toolchain.Swift_2_3
-CARTHAGE_DERIVED_DATA_FLAGS=--derived-data ./Builds
+CARTHAGE_PLATFORMS_NO_TVOS=Mac,iOS
+CARTHAGE_PLATFORMS_ALL=Mac,iOS,tvOS
+CARTHAGE_PLATFORM_FLAGS:=--platform $(CARTHAGE_PLATFORMS_NO_TVOS)
+CARTHAGE_PLATFORM_ALL_FLAGS:=--platform $(CARTHAGE_PLATFORMS_ALL)
+CARTHAGE_TOOLCHAIN_FLAGS:=--toolchain com.apple.dt.toolchain.Swift_2_3
+CARTHAGE_DERIVED_DATA_FLAGS:=--derived-data $(XC_DERIVED_DATA_PATH)
 
 POD_TRUNK_PUSH_FLAGS=--verbose
 
-test: install-carthage clean build-tests run-tests
+test: install-carthage clean run-tests
 
-test-osx: install-carthage clean build-tests-osx run-tests-osx
+test-osx: install-carthage clean run-tests-osx
 
-test-ios: install-carthage clean build-tests-ios run-tests-ios
+test-ios: install-carthage clean run-tests-ios
 
-test-tvos: install-carthage clean build-tests-tvos run-tests-tvos
+test-tvos: install-carthage-tvos clean run-tests-tvos
 
 # Build Tests
 
 clean:
-	xcodebuild -project $(XCODE_PROJ) -alltargets clean
+	xcodebuild -project $(XC_PROJ) -alltargets clean
 
 install-pod:
 	COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=YES pod install
@@ -32,29 +35,22 @@ install-carthage:
 	carthage update $(CARTHAGE_PLATFORM_FLAGS) --no-build
 	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
 
-build-tests-osx:
-	xcodebuild $(OSX_TEST_SCHEME_FLAGS) build
-
-build-tests-ios:
-	xcodebuild $(IOS_TEST_SCHEME_FLAGS) build
-
-build-tests-tvos:
-	xcodebuild $(TVOS_TEST_SCHEME_FLAGS) build
+install-carthage-tvos: 
+	carthage update $(CARTHAGE_PLATFORM_ALL_FLAGS) --no-build
+	carthage build --no-skip-current $(CARTHAGE_PLATFORM_ALL_FLAGS) $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
 
 # Run Tests
 
 run-tests-osx:
-	xcodebuild $(OSX_TEST_SCHEME_FLAGS) test
+	xcrun xcodebuild test $(OSX_TEST_SCHEME_FLAGS)
 
 run-tests-ios:
-	xcodebuild $(IOS_TEST_SCHEME_FLAGS) test
+	xcrun xcodebuild test $(IOS_TEST_SCHEME_FLAGS)
 
 run-tests-tvos:
-	xcodebuild $(TVOS_TEST_SCHEME_FLAGS) test
+	xcrun xcodebuild test $(TVOS_TEST_SCHEME_FLAGS)
 
 # Intetfaces
-
-build-tests: build-tests-osx build-tests-ios build-tests-tvos
 
 run-tests: run-tests-osx run-tests-ios run-tests-tvos
 
@@ -63,7 +59,7 @@ run-tests: run-tests-osx run-tests-ios run-tests-tvos
 test-carthage:
 	rm -rf Pods/
 	carthage update $(CARTHAGE_PLATFORM_FLAGS) --no-build
-	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) --verbose $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS)
+	carthage build --no-skip-current $(CARTHAGE_PLATFORM_FLAGS) $(CARTHAGE_TOOLCHAIN_FLAGS) $(CARTHAGE_DERIVED_DATA_FLAGS) --verbose 
 
 test-pod:
 	pod spec lint ./*.podspec --verbose --allow-warnings --no-clean --fail-fast
